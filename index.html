@@ -7,7 +7,9 @@
         <link rel="stylesheet" href="/style.css" />
     </head>
     <body>
+        <!-- carousel !-->
         <section class="carousel-container">
+            <!-- sliders !-->
             <div class="carousel" data-carousel>
                 <button
                     class="carousel-button prev"
@@ -21,13 +23,27 @@
                 >
                     &#8658;
                 </button>
-
                 <ul class="slide-container"></ul>
             </div>
+            <!-- indicators !-->
+            <div class="indicators"></div>
         </section>
 
-        <div class="indicators"></div>
-        <div>skds</div>
+        <!-- controller !-->
+        <div class="controls">
+            <button id="toggle-autoplay">정지</button>
+            <div>
+                <label for="interval-time">Play 속도</label>
+                <!-- 드롭다운 메뉴 추가 -->
+                <select id="interval-time">
+                    <option value="1000">1초</option>
+                    <option value="2000" selected>2초</option>
+                    <option value="3000">3초</option>
+                    <option value="4000">4초</option>
+                    <option value="5000">5초</option>
+                </select>
+            </div>
+        </div>
 
         <script type="module" src="/main.js"></script>
     </body>

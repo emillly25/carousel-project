@@ -11,7 +11,10 @@ body {
 .carousel-container {
     border: 2px solid red;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
+    gap: 1rem;
 }
 
 .carousel {
@@ -81,7 +84,6 @@ body {
 .indicators {
     display: flex;
     justify-content: center;
-    margin-top: 1rem;
 }
 
 .indicator {
@@ -97,4 +99,16 @@ body {
 
 .indicator.active {
     background-color: darkgray;
+}
+
+.controls {
+    margin-top: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    button {
+        width: 100px;
+        height: 30px;
+    }
 }
