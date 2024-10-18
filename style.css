@@ -77,3 +77,24 @@ body {
     color: white;
     background-color: rgba(0, 0, 0, 0.2);
 }
+
+.indicators {
+    display: flex;
+    justify-content: center;
+    margin-top: 1rem;
+}
+
+.indicator {
+    display: inline-block;
+    width: 18px;
+    height: 18px;
+    background-color: lightgray;
+    margin: 0 5px;
+    border-radius: 50%;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.indicator.active {
+    background-color: darkgray;
+}
