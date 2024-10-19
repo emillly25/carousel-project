@@ -7,14 +7,18 @@ const imageSlideDatas = [
     { src: 'images/image6.jpg', alt: 'Slide 6' },
 ];
 
-const slidesContainer = document.querySelector('.slide-container');
+const slidesContainer = document.querySelector('.slide-container'); //ul
 const indicatorsContainer = document.querySelector('.indicators');
+const buttons = document.querySelectorAll('.carousel-button');
 const toggleAutoplayButton = document.getElementById('toggle-autoplay');
-const intervalInput = document.getElementById('interval-time');
+const intervalDropdown = document.getElementById('interval-time');
 
-let intervalTime = 2000;
-let autoplay = true;
+let intervalTime = 2000; //default
+let autoplay = true; //default
 let autoplayInterval;
+
+let startX = 0; // 터치시작지점 X 좌표
+let endX = 0; // 터치종료지점 X 좌표
 
 //이미지 동적으로 추가
 imageSlideDatas.forEach((slide, index) => {
@@ -43,16 +47,13 @@ imageSlideDatas.forEach((slide, index) => {
     indicatorsContainer.appendChild(indicator);
 });
 
-const buttons = document.querySelectorAll('.carousel-button');
-
 buttons.forEach((button) => {
     button.addEventListener('click', () => {
-        //1. 이전이냐 다음이냐 결정
+        //prev or next
         const offset = button.dataset.carouselButton === 'next' ? 1 : -1;
 
         moveToSlide(offset);
-
-        resetAutoplay(); // 버튼 클릭 시 자동 슬라이드 재설정
+        resetAutoplay();
     });
 });
 
@@ -62,36 +63,63 @@ indicatorsContainer.addEventListener('click', (e) => {
     const selectedIndicatorIndex = parseInt(e.target.dataset.index);
 
     moveToSpecificSlide(selectedIndicatorIndex);
-    resetAutoplay(); // 인디케이터 클릭 시 자동 슬라이드 재설정
+    resetAutoplay();
 });
 
+// 전환 시간 변경 시 자동 슬라이드 재설정
+intervalDropdown.addEventListener('change', (e) => {
+    intervalTime = parseInt(e.target.value); //시간 (ms단위)
+    resetAutoplay();
+});
+
+// 자동 슬라이드 토글 버튼에 이벤트 추가
+toggleAutoplayButton.addEventListener('click', toggleAutoplay);
+
+// 터치 시작 시 이벤트 처리
+slidesContainer.addEventListener('touchstart', (e) => {
+    startX = e.touches[0].clientX; // 터치시작 x좌표
+});
+
+// 터치가 이동하는 동안 이벤트 처리
+slidesContainer.addEventListener('touchmove', (e) => {
+    endX = e.touches[0].clientX; // 터치이동 x좌표
+});
+
+// 터치가 끝났을 때 이벤트 처리
+slidesContainer.addEventListener('touchend', () => {
+    handleSwipeGesture();
+});
+
+// 페이지 로드 시 자동 슬라이드 시작
+startAutoplay();
+
+// 슬라이드 이동(prev/next)
 function moveToSlide(offset) {
-    //2. ul 찾기 = slides
+    // slides 찾기 (ul)
     const slides = document.querySelector('.slide-container');
 
-    //3. ul안에서 현재 active slide 찾기
+    // slides에서 현재 active slide 찾기
     const activeSlide = slides.querySelector('[data-active]');
 
-    //4. active slide 는 ul안에서 현재 몇번째 인덱스인가
+    // active slide 는 slides에서 현재 몇번째 인덱스인가
     const activeSliceIndex = [...slides.children].indexOf(activeSlide);
 
     let newSlideIndex = activeSliceIndex + offset;
-    //5. 첫번째 -> 마지막
+
+    // 첫번째 -> 마지막
     if (newSlideIndex < 0) {
         newSlideIndex = slides.children.length - 1;
     }
-    //6. 마지막 -> 첫번째
+    // 마지막 -> 첫번째
     if (newSlideIndex >= slides.children.length) {
         newSlideIndex = 0;
     }
 
-    //7. 새로운 active slide의 dataset 설정
+    // 새로운 active slide의 dataset 설정
     slides.children[newSlideIndex].dataset.active = true;
-
-    //8. 현재 active slide는 active 삭제
+    // 현재 active slide는 active 삭제
     delete activeSlide.dataset.active;
-
-    // 9.인디케이터 업데이트
+    // 인디케이터 업데이트
     updateIndicators(newSlideIndex);
 }
 
@@ -103,7 +131,7 @@ function moveToSpecificSlide(index) {
     // 인디케이터 클릭 시 해당 슬라이드를 active로 변경
     slides.children[index].dataset.active = true;
 
-    //기존 activeSlide는 active 삭제
+    // 기존 activeSlide는 active 삭제
     delete activeSlide.dataset.active;
 
     // 인디케이터 업데이트
@@ -127,12 +155,14 @@ function startAutoplay() {
     autoplayInterval = setInterval(() => {
         moveToSlide(1);
     }, intervalTime);
+
     toggleAutoplayButton.textContent = '정지';
 }
 
 // 자동 슬라이드 중지 함수
 function stopAutoplay() {
     clearInterval(autoplayInterval);
+
     toggleAutoplayButton.textContent = '재생';
 }
 
@@ -146,12 +176,6 @@ function toggleAutoplay() {
     autoplay = !autoplay;
 }
 
-// 전환 시간 변경 시 자동 슬라이드 재설정
-intervalInput.addEventListener('change', (e) => {
-    intervalTime = parseInt(e.target.value);
-    resetAutoplay();
-});
-
 // 자동 슬라이드 재설정 함수
 function resetAutoplay() {
     stopAutoplay();
@@ -159,9 +183,19 @@ function resetAutoplay() {
         startAutoplay();
     }
 }
+// 스와이프 제스처 처리 함수
+function handleSwipeGesture() {
+    const swipeThreshold = 50; // 스와이프가 인식되는 최소 거리 (px)
+    const swipeDistance = startX - endX; //이동거리
 
-// 자동 슬라이드 토글 버튼에 이벤트 추가
-toggleAutoplayButton.addEventListener('click', toggleAutoplay);
-
-// 페이지 로드 시 자동 슬라이드 시작
-startAutoplay();
+    // 오른쪽에서 왼쪽으로 스와이프 (next로)
+    if (swipeDistance > swipeThreshold) {
+        moveToSlide(1); // 다음 슬라이드로 이동
+        resetAutoplay();
+    }
+    // 왼쪽에서 오른쪽으로 스와이프 (prev로)
+    if (swipeDistance < -swipeThreshold) {
+        moveToSlide(-1); // 이전 슬라이드로 이동
+        resetAutoplay();
+    }
+}
