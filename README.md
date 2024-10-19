@@ -6,11 +6,14 @@ npm run dev
 
 ### 프로젝트 구조
 
--   index.html: 기본 html 캐러셀 구조
--   style.css: 캐러셀 css
--   main.js: 캐러셀 동작 js
--   public/assets: svg icon 파일
--   public/images: 캐러셀 이미지 파일
+```
+├── index.html
+├── style.css
+├── main.js
+└── public
+    ├── assets
+    ├── images
+```
 
 ### 주요 기능
 
@@ -19,3 +22,7 @@ npm run dev
 -   재생 속도 조절 가능 (1000ms ~ 5000ms)
 -   스와이프 제스쳐로 슬라이더 이동
 -   인디케이터
+
+### 미리보기
+
+<img src="public/images/readme_img.png" alt="preview_img">
