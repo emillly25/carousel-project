@@ -113,7 +113,6 @@ function moveToSpecificSlide(index) {
 
 // 인디케이터 업데이트
 function updateIndicators(activeIndex) {
-    console.log('activeIndex', activeIndex);
     const indicators = document.querySelectorAll('.indicator');
     indicators.forEach((indicator, index) => {
         if (index === activeIndex) {
