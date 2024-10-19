@@ -8,42 +8,47 @@
     </head>
     <body>
         <!-- carousel !-->
-        <section class="carousel-container">
-            <!-- sliders !-->
-            <div class="carousel" data-carousel>
-                <button
-                    class="carousel-button prev"
-                    data-carousel-button="prev"
-                >
-                    &#8656;
-                </button>
-                <button
-                    class="carousel-button next"
-                    data-carousel-button="next"
-                >
-                    &#8658;
-                </button>
-                <ul class="slide-container"></ul>
+        <section>
+            <!-- title !-->
+            <div class="title-container">
+                <h1>Carousel-Project</h1>
             </div>
-            <!-- indicators !-->
-            <div class="indicators"></div>
-        </section>
 
-        <!-- controller !-->
-        <div class="controls">
-            <button id="toggle-autoplay">정지</button>
-            <div>
-                <label for="interval-time">Play 속도</label>
-                <!-- 드롭다운 메뉴 추가 -->
-                <select id="interval-time">
-                    <option value="1000">1초</option>
-                    <option value="2000" selected>2초</option>
-                    <option value="3000">3초</option>
-                    <option value="4000">4초</option>
-                    <option value="5000">5초</option>
-                </select>
+            <div class="carousel-container">
+                <!-- sliders !-->
+                <div class="carousel" data-carousel>
+                    <button
+                        class="carousel-button prev"
+                        data-carousel-button="prev"
+                    >
+                        &#8656;
+                    </button>
+                    <button
+                        class="carousel-button next"
+                        data-carousel-button="next"
+                    >
+                        &#8658;
+                    </button>
+                    <!-- slideImageList !-->
+                    <ul class="slide-container"></ul>
+                    <!-- indicators !-->
+                    <ul class="indicators"></ul>
+                </div>
+
+                <!-- controller !-->
+                <div class="controls">
+                    <button id="toggle-autoplay"></button>
+                    <!-- dropdown  -->
+                    <select id="interval-time">
+                        <option value="1000">1초</option>
+                        <option value="2000" selected>2초</option>
+                        <option value="3000">3초</option>
+                        <option value="4000">4초</option>
+                        <option value="5000">5초</option>
+                    </select>
+                </div>
             </div>
-        </div>
+        </section>
 
         <script type="module" src="/main.js"></script>
     </body>

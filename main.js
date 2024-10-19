@@ -32,7 +32,7 @@ imageSlideDatas.forEach((slide, index) => {
     imgElement.alt = slide.alt;
 
     // 인디케이터 추가
-    const indicator = document.createElement('span');
+    const indicator = document.createElement('li');
     indicator.classList.add('indicator');
     indicator.dataset.index = index;
 
@@ -156,14 +156,16 @@ function startAutoplay() {
         moveToSlide(1);
     }, intervalTime);
 
-    toggleAutoplayButton.textContent = '정지';
+    toggleAutoplayButton.innerHTML =
+        '<img src="public/assets/icon_pause.svg" alt="Play icon" />';
 }
 
 // 자동 슬라이드 중지 함수
 function stopAutoplay() {
     clearInterval(autoplayInterval);
 
-    toggleAutoplayButton.textContent = '재생';
+    toggleAutoplayButton.innerHTML =
+        '<img src="public/assets/icon_play.svg" alt="Play icon" />';
 }
 
 // 자동 슬라이드 상태를 토글하는 함수
