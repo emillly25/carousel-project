@@ -113,6 +113,7 @@ function moveToSpecificSlide(index) {
 
 // 인디케이터 업데이트
 function updateIndicators(activeIndex) {
+    console.log('activeIndex', activeIndex);
     const indicators = document.querySelectorAll('.indicator');
     indicators.forEach((indicator, index) => {
         if (index === activeIndex) {
@@ -127,6 +128,15 @@ function updateIndicators(activeIndex) {
 function handleIndicatorClick(e) {
     //선택된 인디케이터의 인덱스
     const selectedIndicatorIndex = parseInt(e.target.dataset.index);
+
+    // 현재 활성화된 슬라이드
+    const activeSlide = slidesContainer.querySelector('[data-active]');
+    const activeSlideIndex = [...slidesContainer.children].indexOf(activeSlide);
+
+    // 이미 선택된거 여러번 반복 선택하면 리턴
+    if (selectedIndicatorIndex === activeSlideIndex) {
+        return;
+    }
     moveToSpecificSlide(selectedIndicatorIndex);
     resetAutoplay();
 }
