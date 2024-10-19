@@ -171,3 +171,19 @@ section {
     outline: none;
     border-color: #222;
 }
+
+/* 태블릿 & 모바일 (1024 이하) */
+@media (max-width: 1024px) {
+    .carousel {
+        height: 100vh;
+    }
+
+    .carousel-button {
+        font-size: 3rem;
+    }
+
+    .indicator {
+        width: 14px;
+        height: 14px;
+    }
+}
